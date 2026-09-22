@@ -23,7 +23,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   // Default suggested Google Account from session metadata
   const defaultGoogleAccount = {
     name: 'Ankit Kumar',
-    email: 'ankitkumar999090@gmail.com',
+    email: 'ankit@gmail.com',
     picture: 'https://lh3.googleusercontent.com/a/default-user=s96-c'
   };
 
@@ -36,15 +36,18 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
     const win = window as any;
     if (win.google && win.google.accounts && win.google.accounts.id) {
       try {
-        win.google.accounts.id.initialize({
-          client_id: googleClientId,
-          callback: async (response: any) => {
-            if (response && response.credential) {
-              const ok = await loginWithGoogle({ credential: response.credential });
-              if (ok && onSuccess) onSuccess();
+        if (!win.__googleGsiInitialized) {
+          win.google.accounts.id.initialize({
+            client_id: googleClientId,
+            callback: async (response: any) => {
+              if (response && response.credential) {
+                const ok = await loginWithGoogle({ credential: response.credential });
+                if (ok && onSuccess) onSuccess();
+              }
             }
-          }
-        });
+          });
+          win.__googleGsiInitialized = true;
+        }
 
         if (googleBtnContainerRef.current) {
           googleBtnContainerRef.current.innerHTML = '';

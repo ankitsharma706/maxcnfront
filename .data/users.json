@@ -1,0 +1,13 @@
+[
+  {
+    "id": "usr_1790063404887_brrpdi",
+    "username": "admin",
+    "name": "admin",
+    "email": "admin@afterma.health",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=admin@afterma.health",
+    "role": "trader",
+    "authProvider": "email",
+    "passwordHash": "",
+    "createdAt": "2026-09-22T07:50:04.887Z"
+  }
+]

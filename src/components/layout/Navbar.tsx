@@ -294,32 +294,12 @@ export const Navbar: React.FC = () => {
                         <button
                           onClick={() => {
                             setShowUserMenu(false);
-                            setActiveTab('auth');
-                          }}
-                          className="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/60 flex items-center gap-2 cursor-pointer"
-                        >
-                          <User className="w-3.5 h-3.5 text-[#0EA5E9]" />
-                          <span>Trader Profile & Account</span>
-                        </button>
-                        <button
-                          onClick={() => {
-                            setShowUserMenu(false);
                             setActiveTab('settings');
                           }}
                           className="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/60 flex items-center gap-2 cursor-pointer"
                         >
                           <Settings className="w-3.5 h-3.5 text-slate-400" />
                           <span>Terminal Settings</span>
-                        </button>
-                        <button
-                          onClick={() => {
-                            setShowUserMenu(false);
-                            logout();
-                          }}
-                          className="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-[#EF4444] hover:bg-red-50 dark:hover:bg-red-950/30 flex items-center gap-2 cursor-pointer"
-                        >
-                          <LogOut className="w-3.5 h-3.5" />
-                          <span>Sign Out</span>
                         </button>
                       </div>
                     </div>

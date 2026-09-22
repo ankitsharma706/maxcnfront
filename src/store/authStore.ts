@@ -47,37 +47,28 @@ const STORAGE_KEY_USER = 'commodity_greeks_auth_user';
 const STORAGE_KEY_TOKEN = 'commodity_greeks_auth_token';
 
 export const useAuthStore = create<AuthState>((set, get) => ({
-  user: null,
-  token: null,
-  isAuthenticated: false,
+  user: {
+    id: 'local_admin',
+    username: 'admin',
+    name: 'Trader Admin',
+    email: 'admin@local.host',
+    role: 'admin',
+    authProvider: 'email'
+  },
+  token: 'mock-token',
+  isAuthenticated: true,
   isLoading: false,
   error: null,
   authMode: 'login',
   intendedDestination: null,
-  isSessionInitialized: false,
+  isSessionInitialized: true,
 
   setAuthMode: (mode) => set({ authMode: mode, error: null }),
   setIntendedDestination: (dest) => set({ intendedDestination: dest }),
   clearError: () => set({ error: null }),
 
   initSession: () => {
-    try {
-      const storedUser = localStorage.getItem(STORAGE_KEY_USER);
-      const storedToken = localStorage.getItem(STORAGE_KEY_TOKEN);
-      if (storedUser && storedToken) {
-        const user = JSON.parse(storedUser);
-        set({
-          user,
-          token: storedToken,
-          isAuthenticated: true,
-          isSessionInitialized: true
-        });
-        return;
-      }
-    } catch {
-      localStorage.removeItem(STORAGE_KEY_USER);
-      localStorage.removeItem(STORAGE_KEY_TOKEN);
-    }
+    // Force authenticated state, ignore localStorage
     set({ isSessionInitialized: true });
   },
 
@@ -199,16 +190,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   logout: () => {
-    try {
-      fetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
-    } catch {}
-    localStorage.removeItem(STORAGE_KEY_USER);
-    localStorage.removeItem(STORAGE_KEY_TOKEN);
-    set({
-      user: null,
-      token: null,
-      isAuthenticated: false,
-      error: null
-    });
+    // Disabled logout since auth is mocked and always on
+    // fetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
   }
 }));

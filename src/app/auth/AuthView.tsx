@@ -73,7 +73,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
   // Default suggested Google Account from verified session metadata
   const defaultGoogleAccount = {
     name: 'Ankit Kumar',
-    email: 'ankitkumar999090@gmail.com',
+    email: 'ankit@gmail.com',
     picture: 'https://lh3.googleusercontent.com/a/default-user=s96-c'
   };
 
