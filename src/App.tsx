@@ -65,7 +65,7 @@ export default function App() {
   const isWideLayout = activeTab === 'calculator' || activeTab === 'scenario' || activeTab === 'analytics';
 
   return (
-    <div className="min-h-screen bg-[#F7FAFB] dark:bg-[#0B131B] text-[#1D2939] dark:text-[#F0F6F9] flex flex-col relative selection:bg-[#00778A]/20 selection:text-[#00778A] transition-colors duration-200">
+    <div className="min-h-screen bg-transparent text-[#1D2939] dark:text-[#F0F6F9] flex flex-col relative selection:bg-[#00778A]/20 selection:text-[#00778A] transition-colors duration-200">
       {/* Background ambient floating gradients - TrustedAir aesthetic */}
       <div className="fixed top-0 left-1/4 w-[600px] h-[600px] rounded-full floating-gradient-1 pointer-events-none blur-[120px] -z-10 opacity-70" />
       <div className="fixed bottom-0 right-1/4 w-[500px] h-[500px] rounded-full floating-gradient-2 pointer-events-none blur-[100px] -z-10 opacity-60" />
