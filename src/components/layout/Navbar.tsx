@@ -20,7 +20,8 @@ import {
   Sun,
   Moon,
   Menu,
-  X
+  X,
+  BookOpen
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
@@ -45,12 +46,13 @@ export const Navbar: React.FC = () => {
 
   const spec = COMMODITY_SPECS[selectedCommodity] || COMMODITY_SPECS.GOLD;
 
-  // Center Navigation Tabs - exactly 8 professional trading terminal views with canonical paths
+  // Center Navigation Tabs - exactly 9 professional trading terminal views with canonical paths
   const navItems: { id: NavigationTab; label: string; path: string; icon: React.ComponentType<{ className?: string }> }[] = [
     { id: 'dashboard', label: 'Dashboard', path: '/', icon: LayoutDashboard },
     { id: 'calculator', label: 'Greeks Workspace', path: '/calculator', icon: Calculator },
     { id: 'scenario', label: 'Simulator', path: '/scenario', icon: Sliders },
     { id: 'analytics', label: 'Analytics', path: '/analytics', icon: LineChart },
+    { id: 'docs', label: 'Documentation', path: '/docs', icon: BookOpen },
     { id: 'uploads', label: 'Price Ingestion', path: '/uploads', icon: Upload },
     { id: 'history', label: 'History', path: '/history', icon: History },
     { id: 'about', label: 'About', path: '/about', icon: FileText },

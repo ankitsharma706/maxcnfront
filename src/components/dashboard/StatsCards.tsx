@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useGreeksStore } from '../../store/useGreeksStore';
+import { useVisitorAnalytics } from '../../hooks/useVisitorAnalytics';
 import {
   Coins,
   Layers,
@@ -12,11 +13,13 @@ import {
   Clock,
   Sparkles,
   ArrowUpRight,
-  Database
+  Database,
+  Users
 } from 'lucide-react';
 
 export const StatsCards: React.FC = () => {
   const { price, greeks, history, activeUploadName, selectedCommodity, setActiveTab } = useGreeksStore();
+  const { totalVisitors, liveActiveTraders } = useVisitorAnalytics();
 
   const lastUpload = history[0];
 
@@ -110,6 +113,16 @@ export const StatsCards: React.FC = () => {
       badgeColor: 'text-[#00778A] dark:text-[#38BDF8] bg-[#00778A]/10 border border-[#00778A]/20',
       icon: Clock,
       accentColor: '#00778A'
+    },
+    {
+      id: 'active_traders',
+      title: 'Traders & Traffic',
+      value: `${liveActiveTraders} Online`,
+      subtext: `${totalVisitors.toLocaleString()} total platform visits`,
+      badge: 'Vercel Analytics',
+      badgeColor: 'text-[#0EA5E9] bg-[#0EA5E9]/10 border border-[#0EA5E9]/20',
+      icon: Users,
+      accentColor: '#0EA5E9'
     }
   ];
 

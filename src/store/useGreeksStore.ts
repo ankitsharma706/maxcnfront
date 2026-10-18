@@ -36,7 +36,8 @@ export type NavigationTab =
   | 'about'
   | 'contact'
   | 'privacy'
-  | 'terms';
+  | 'terms'
+  | 'docs';
 
 export interface OcrDataPayload {
   rawText: string;
