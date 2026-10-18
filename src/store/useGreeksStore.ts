@@ -32,7 +32,11 @@ export type NavigationTab =
   | 'portfolio'
   | 'api_docs'
   | 'settings'
-  | 'auth';
+  | 'auth'
+  | 'about'
+  | 'contact'
+  | 'privacy'
+  | 'terms';
 
 export interface OcrDataPayload {
   rawText: string;
