@@ -6,7 +6,8 @@ import crypto from 'crypto';
 // 1. Helmet HTTP headers configuration
 export const helmetMiddleware = helmet({
   contentSecurityPolicy: false, // Allows Vite SPA scripts and images in development
-  crossOriginEmbedderPolicy: false
+  crossOriginEmbedderPolicy: false,
+  crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' } // Enables Google Sign-In & AdSense verification popups
 });
 
 // 2. Rate Limiting configuration

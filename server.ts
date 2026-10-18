@@ -104,6 +104,23 @@ async function startServer() {
   // 5. Core Greeks calculation legacy routes
   app.use('/api/greeks', greeksRoutes);
 
+  // Crawler & Verification Endpoints (Robots, Sitemap, AdSense Ads.txt)
+  const publicDir = path.resolve(__dirname, 'public');
+  app.get('/robots.txt', (_req, res) => {
+    res.type('text/plain; charset=utf-8');
+    res.sendFile(path.join(publicDir, 'robots.txt'));
+  });
+
+  app.get('/sitemap.xml', (_req, res) => {
+    res.type('application/xml; charset=utf-8');
+    res.sendFile(path.join(publicDir, 'sitemap.xml'));
+  });
+
+  app.get('/ads.txt', (_req, res) => {
+    res.type('text/plain; charset=utf-8');
+    res.sendFile(path.join(publicDir, 'ads.txt'));
+  });
+
   // 5. Vite middleware for frontend SPA in development, static files in production
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
@@ -112,7 +129,7 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), 'dist');
+    const distPath = path.resolve(__dirname, 'dist');
     app.use(express.static(distPath));
     app.get('*', (_req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
