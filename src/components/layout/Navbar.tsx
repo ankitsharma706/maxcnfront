@@ -45,16 +45,16 @@ export const Navbar: React.FC = () => {
 
   const spec = COMMODITY_SPECS[selectedCommodity] || COMMODITY_SPECS.GOLD;
 
-  // Center Navigation Tabs - exactly 7 professional trading terminal views
-  const navItems: { id: NavigationTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'calculator', label: 'Greeks Workspace', icon: Calculator },
-    { id: 'scenario', label: 'Simulator', icon: Sliders },
-    { id: 'analytics', label: 'Analytics', icon: LineChart },
-    { id: 'uploads', label: 'Price Ingestion', icon: Upload },
-    { id: 'history', label: 'History', icon: History },
-    { id: 'reports', label: 'Reports', icon: FileText },
-    { id: 'portfolio', label: 'Portfolio', icon: PieChart }
+  // Center Navigation Tabs - exactly 8 professional trading terminal views with canonical paths
+  const navItems: { id: NavigationTab; label: string; path: string; icon: React.ComponentType<{ className?: string }> }[] = [
+    { id: 'dashboard', label: 'Dashboard', path: '/', icon: LayoutDashboard },
+    { id: 'calculator', label: 'Greeks Workspace', path: '/calculator', icon: Calculator },
+    { id: 'scenario', label: 'Simulator', path: '/scenario', icon: Sliders },
+    { id: 'analytics', label: 'Analytics', path: '/analytics', icon: LineChart },
+    { id: 'uploads', label: 'Price Ingestion', path: '/uploads', icon: Upload },
+    { id: 'history', label: 'History', path: '/history', icon: History },
+    { id: 'about', label: 'About', path: '/about', icon: FileText },
+    { id: 'contact', label: 'Contact', path: '/contact', icon: PieChart }
   ];
 
   // Top Market Ticker Commodities (Gold, Silver, Crude, Copper, Nickel + Natural Gas, Zinc)
@@ -94,10 +94,15 @@ export const Navbar: React.FC = () => {
       <div className="h-[72px] w-full backdrop-blur-[20px] bg-[#F8FAFC]/85 dark:bg-[#08111F]/85 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
         <div className="max-w-[1920px] mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
           {/* LEFT: Logo + Product Name + Subtitle */}
-          <div
-            onClick={() => setActiveTab('dashboard')}
+          <a
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              setActiveTab('dashboard');
+            }}
             className="flex items-center gap-3 shrink-0 cursor-pointer group select-none"
             id="navbar-brand-logo"
+            aria-label="Commodity Greeks Pro Home"
           >
             {/* Geometric institutional delta-theta mark */}
             <div className="w-10 h-10 rounded-[14px] bg-gradient-to-tr from-[#0EA5E9] to-[#0284C7] flex items-center justify-center text-white shadow-md shadow-[#0EA5E9]/20 group-hover:scale-[1.03] transition-transform shrink-0">
@@ -127,7 +132,7 @@ export const Navbar: React.FC = () => {
                 MCX Options & Volatility Terminal
               </p>
             </div>
-          </div>
+          </a>
 
           {/* CENTER: Navigation Links (Linear / Stripe Style 16px Rounded Segment) */}
           <nav
@@ -138,9 +143,13 @@ export const Navbar: React.FC = () => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
               return (
-                <button
+                <a
                   key={item.id}
-                  onClick={() => setActiveTab(item.id)}
+                  href={item.path}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveTab(item.id);
+                  }}
                   id={`nav-tab-${item.id}`}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-150 cursor-pointer whitespace-nowrap ${
                     isActive
@@ -150,7 +159,7 @@ export const Navbar: React.FC = () => {
                 >
                   <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#0EA5E9]' : 'text-slate-400 dark:text-slate-500'}`} />
                   <span>{item.label}</span>
-                </button>
+                </a>
               );
             })}
           </nav>
@@ -275,9 +284,11 @@ export const Navbar: React.FC = () => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.id;
                 return (
-                  <button
+                  <a
                     key={item.id}
-                    onClick={() => {
+                    href={item.path}
+                    onClick={(e) => {
+                      e.preventDefault();
                       setActiveTab(item.id);
                       setMobileMenuOpen(false);
                     }}
@@ -289,9 +300,36 @@ export const Navbar: React.FC = () => {
                   >
                     <Icon className="w-3.5 h-3.5" />
                     <span>{item.label}</span>
-                  </button>
+                  </a>
                 );
               })}
+            </div>
+
+            {/* Mobile Legal & Compliance Footer Links */}
+            <div className="flex items-center justify-around pt-2 border-t border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 font-sans">
+              <a
+                href="/privacy-policy"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab('privacy');
+                  setMobileMenuOpen(false);
+                }}
+                className="hover:text-[#0EA5E9]"
+              >
+                Privacy Policy
+              </a>
+              <span>•</span>
+              <a
+                href="/terms-of-service"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab('terms');
+                  setMobileMenuOpen(false);
+                }}
+                className="hover:text-[#0EA5E9]"
+              >
+                Terms of Service
+              </a>
             </div>
           </div>
         )}

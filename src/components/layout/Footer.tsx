@@ -256,14 +256,66 @@ export const Footer: React.FC = () => {
           {/* RIGHT SECTION: Links, Market Clock, Theme Toggle & Current User Avatar  */}
           {/* ----------------------------------------------------------------------- */}
           <div className="flex items-center gap-3 shrink-0">
-            {/* Footer Quick Links (Documentation, API Docs, Reports, Settings, Support) */}
-            <div className="hidden 2xl:flex items-center gap-3 text-[11px] text-slate-600 dark:text-slate-400 font-sans">
+            {/* Footer Quick Links (About, Contact, Privacy, Terms, Reports, Settings, Docs) */}
+            <nav aria-label="Footer Navigation" className="hidden xl:flex items-center gap-2.5 text-[11px] text-slate-600 dark:text-slate-400 font-sans">
+              <a
+                href="/about"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab('about');
+                }}
+                className={`hover:text-[#0EA5E9] dark:hover:text-[#0EA5E9] transition-colors ${
+                  activeTab === 'about' ? 'text-[#0EA5E9] font-bold' : ''
+                }`}
+              >
+                About
+              </a>
+              <span>•</span>
+              <a
+                href="/contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab('contact');
+                }}
+                className={`hover:text-[#0EA5E9] dark:hover:text-[#0EA5E9] transition-colors ${
+                  activeTab === 'contact' ? 'text-[#0EA5E9] font-bold' : ''
+                }`}
+              >
+                Contact
+              </a>
+              <span>•</span>
+              <a
+                href="/privacy-policy"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab('privacy');
+                }}
+                className={`hover:text-[#0EA5E9] dark:hover:text-[#0EA5E9] transition-colors ${
+                  activeTab === 'privacy' ? 'text-[#0EA5E9] font-bold' : ''
+                }`}
+              >
+                Privacy Policy
+              </a>
+              <span>•</span>
+              <a
+                href="/terms-of-service"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab('terms');
+                }}
+                className={`hover:text-[#0EA5E9] dark:hover:text-[#0EA5E9] transition-colors ${
+                  activeTab === 'terms' ? 'text-[#0EA5E9] font-bold' : ''
+                }`}
+              >
+                Terms
+              </a>
+              <span>•</span>
               <button
                 type="button"
                 onClick={() => setIsDocsModalOpen(true)}
                 className="hover:text-[#0EA5E9] dark:hover:text-[#0EA5E9] transition-colors cursor-pointer"
               >
-                Documentation
+                Docs
               </button>
               <span>•</span>
               <button
@@ -271,51 +323,76 @@ export const Footer: React.FC = () => {
                 onClick={() => setIsApiDocsModalOpen(true)}
                 className="hover:text-[#0EA5E9] dark:hover:text-[#0EA5E9] transition-colors cursor-pointer"
               >
-                API Docs
+                API
               </button>
-              <span>•</span>
-              <button
-                type="button"
-                onClick={() => setActiveTab('reports')}
-                className="hover:text-[#0EA5E9] dark:hover:text-[#0EA5E9] transition-colors cursor-pointer"
-              >
-                Reports
-              </button>
-              <span>•</span>
-              <button
-                type="button"
-                onClick={() => setActiveTab('settings')}
-                className="hover:text-[#0EA5E9] dark:hover:text-[#0EA5E9] transition-colors cursor-pointer"
-              >
-                Settings
-              </button>
-              <span>•</span>
-              <button
-                type="button"
-                onClick={() => setIsSupportModalOpen(true)}
-                className="hover:text-[#0EA5E9] dark:hover:text-[#0EA5E9] transition-colors cursor-pointer"
-              >
-                Support
-              </button>
-            </div>
+            </nav>
 
             {/* Collapsed Links Dropdown for Mid/Large Screens */}
-            <div className="relative 2xl:hidden">
+            <div className="relative xl:hidden">
               <button
                 type="button"
                 onClick={() => setShowLinksMenu(!showLinksMenu)}
                 className="flex items-center gap-1 px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-700 dark:text-slate-300 hover:border-[#0EA5E9]/50 transition-colors"
               >
                 <BookOpen className="w-3 h-3 text-[#0EA5E9]" />
-                <span>Links</span>
+                <span>Legal & Links</span>
                 <ChevronUp className={`w-3 h-3 transition-transform ${showLinksMenu ? 'rotate-180' : ''}`} />
               </button>
 
               {showLinksMenu && (
                 <div
-                  className="absolute bottom-full right-0 mb-2 w-44 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl p-1.5 space-y-0.5 text-xs font-sans z-50 animate-in fade-in slide-in-from-bottom-2 duration-150"
+                  className="absolute bottom-full right-0 mb-2 w-48 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl p-1.5 space-y-0.5 text-xs font-sans z-50 animate-in fade-in slide-in-from-bottom-2 duration-150"
                   onMouseLeave={() => setShowLinksMenu(false)}
                 >
+                  <a
+                    href="/about"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveTab('about');
+                      setShowLinksMenu(false);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  >
+                    <BookOpen className="w-3.5 h-3.5 text-[#0EA5E9]" />
+                    <span>About Platform</span>
+                  </a>
+                  <a
+                    href="/contact"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveTab('contact');
+                      setShowLinksMenu(false);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  >
+                    <HelpCircle className="w-3.5 h-3.5 text-[#0EA5E9]" />
+                    <span>Contact Desk</span>
+                  </a>
+                  <a
+                    href="/privacy-policy"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveTab('privacy');
+                      setShowLinksMenu(false);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  >
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                    <span>Privacy Policy</span>
+                  </a>
+                  <a
+                    href="/terms-of-service"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveTab('terms');
+                      setShowLinksMenu(false);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  >
+                    <FileSpreadsheet className="w-3.5 h-3.5 text-amber-500" />
+                    <span>Terms of Service</span>
+                  </a>
+                  <div className="h-px bg-slate-200 dark:bg-slate-800 my-1" />
                   <button
                     onClick={() => {
                       setIsDocsModalOpen(true);
@@ -324,7 +401,7 @@ export const Footer: React.FC = () => {
                     className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                   >
                     <BookOpen className="w-3.5 h-3.5 text-[#0EA5E9]" />
-                    <span>Documentation</span>
+                    <span>Terminal Manual</span>
                   </button>
                   <button
                     onClick={() => {
@@ -335,36 +412,6 @@ export const Footer: React.FC = () => {
                   >
                     <Code2 className="w-3.5 h-3.5 text-[#0EA5E9]" />
                     <span>API Docs</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setActiveTab('reports');
-                      setShowLinksMenu(false);
-                    }}
-                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
-                  >
-                    <FileSpreadsheet className="w-3.5 h-3.5 text-[#0EA5E9]" />
-                    <span>Reports</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setActiveTab('settings');
-                      setShowLinksMenu(false);
-                    }}
-                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
-                  >
-                    <Settings className="w-3.5 h-3.5 text-[#0EA5E9]" />
-                    <span>Settings</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setIsSupportModalOpen(true);
-                      setShowLinksMenu(false);
-                    }}
-                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
-                  >
-                    <HelpCircle className="w-3.5 h-3.5 text-[#0EA5E9]" />
-                    <span>Support</span>
                   </button>
                 </div>
               )}
