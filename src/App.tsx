@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useGreeksStore, applyTheme } from './store/useGreeksStore';
+import { useGreeksStore, applyTheme, NavigationTab } from './store/useGreeksStore';
 import { useAutoPriceSync } from './hooks/useAutoPriceSync';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
@@ -11,12 +11,137 @@ import { AnalyticsView } from './app/analytics/AnalyticsView';
 import { UploadsView } from './app/uploads/UploadsView';
 import { HistoryView } from './app/history/HistoryView';
 import { SettingsView } from './app/settings/SettingsView';
+import { PrivacyPolicyView } from './app/legal/PrivacyPolicyView';
+import { TermsOfServiceView } from './app/legal/TermsOfServiceView';
+import { AboutView } from './app/about/AboutView';
+import { ContactView } from './app/contact/ContactView';
+
+export function getTabFromPath(pathname: string): NavigationTab {
+  const clean = pathname.toLowerCase().replace(/\/$/, '') || '/';
+  switch (clean) {
+    case '/calculator':
+      return 'calculator';
+    case '/scenario':
+      return 'scenario';
+    case '/analytics':
+      return 'analytics';
+    case '/uploads':
+      return 'uploads';
+    case '/history':
+      return 'history';
+    case '/reports':
+      return 'reports';
+    case '/portfolio':
+      return 'portfolio';
+    case '/settings':
+      return 'settings';
+    case '/about':
+      return 'about';
+    case '/contact':
+      return 'contact';
+    case '/privacy-policy':
+    case '/privacy':
+      return 'privacy';
+    case '/terms-of-service':
+    case '/terms':
+      return 'terms';
+    default:
+      return 'dashboard';
+  }
+}
+
+export function getPathFromTab(tab: NavigationTab): string {
+  switch (tab) {
+    case 'calculator':
+      return '/calculator';
+    case 'scenario':
+      return '/scenario';
+    case 'analytics':
+      return '/analytics';
+    case 'uploads':
+      return '/uploads';
+    case 'history':
+      return '/history';
+    case 'reports':
+      return '/reports';
+    case 'portfolio':
+      return '/portfolio';
+    case 'settings':
+      return '/settings';
+    case 'about':
+      return '/about';
+    case 'contact':
+      return '/contact';
+    case 'privacy':
+      return '/privacy-policy';
+    case 'terms':
+      return '/terms-of-service';
+    default:
+      return '/';
+  }
+}
 
 export default function App() {
-  const { activeTab, isSimulatingTicks, tickPriceUpdate, settings } = useGreeksStore();
+  const { activeTab, setActiveTab, isSimulatingTicks, tickPriceUpdate, settings } = useGreeksStore();
 
   // Initialize and synchronize underlying live commodity price
   useAutoPriceSync();
+
+  // Bidirectional URL Routing synchronization (Deep linking & Crawler crawlability)
+  useEffect(() => {
+    // 1. Initial route check on mount
+    const initialTab = getTabFromPath(window.location.pathname);
+    if (initialTab !== activeTab) {
+      setActiveTab(initialTab);
+    }
+
+    // 2. Browser Back/Forward navigation listener
+    const handlePopState = () => {
+      const targetTab = getTabFromPath(window.location.pathname);
+      setActiveTab(targetTab);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Synchronize browser history and canonical tag whenever activeTab changes
+  useEffect(() => {
+    const targetPath = getPathFromTab(activeTab);
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState({ tab: activeTab }, '', targetPath);
+    }
+
+    // Update canonical link in DOM
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    const canonicalUrl = `https://maxcnfront.vercel.app${targetPath === '/' ? '' : targetPath}`;
+    if (canonical) {
+      canonical.href = canonicalUrl;
+    }
+
+    // Dynamic Title Management for SEO & Compliance
+    const titles: Record<NavigationTab, string> = {
+      dashboard: 'Commodity Greeks Pro - Enterprise MCX Greeks Engine',
+      calculator: 'Greeks Workspace & Options Calculator | Commodity Greeks Pro',
+      scenario: 'Greeks Stress Simulator & Scenario Matrix | Commodity Greeks Pro',
+      analytics: 'Option Volatility Surface & Analytics | Commodity Greeks Pro',
+      uploads: 'Smart Price Ingestion & Broker OCR | Commodity Greeks Pro',
+      history: 'Historical Calculations & Archival Logs | Commodity Greeks Pro',
+      reports: 'Options Analytics Reports | Commodity Greeks Pro',
+      portfolio: 'Portfolio Greeks & Exposure | Commodity Greeks Pro',
+      api_docs: 'Quant API Documentation | Commodity Greeks Pro',
+      settings: 'Terminal Configuration & Risk Settings | Commodity Greeks Pro',
+      auth: 'Trader Sign In & Authentication | Commodity Greeks Pro',
+      about: 'About Us | Commodity Greeks Pro',
+      contact: 'Contact Us & Quant Desk Support | Commodity Greeks Pro',
+      privacy: 'Privacy Policy | Commodity Greeks Pro',
+      terms: 'Terms of Service | Commodity Greeks Pro',
+      payoff: 'Payoff Simulation | Commodity Greeks Pro'
+    };
+    if (titles[activeTab]) {
+      document.title = titles[activeTab];
+    }
+  }, [activeTab]);
 
   // Sync theme to DOM on mount and when settings change
   useEffect(() => {
@@ -57,6 +182,14 @@ export default function App() {
         return <HistoryView />;
       case 'settings':
         return <SettingsView />;
+      case 'about':
+        return <AboutView />;
+      case 'contact':
+        return <ContactView />;
+      case 'privacy':
+        return <PrivacyPolicyView />;
+      case 'terms':
+        return <TermsOfServiceView />;
       default:
         return <DashboardView />;
     }
@@ -66,14 +199,14 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-transparent text-[#1D2939] dark:text-[#F0F6F9] flex flex-col relative selection:bg-[#00778A]/20 selection:text-[#00778A] transition-colors duration-200">
-      {/* Background ambient floating gradients - TrustedAir aesthetic */}
+      {/* Background ambient floating gradients */}
       <div className="fixed top-0 left-1/4 w-[600px] h-[600px] rounded-full floating-gradient-1 pointer-events-none blur-[120px] -z-10 opacity-70" />
       <div className="fixed bottom-0 right-1/4 w-[500px] h-[500px] rounded-full floating-gradient-2 pointer-events-none blur-[100px] -z-10 opacity-60" />
 
       {/* Top Navigation */}
       <Navbar />
 
-      {/* Main Trading Platform Container - Wide for Laptop/PC Terminal */}
+      {/* Main Trading Platform Container */}
       <main className={`flex-1 w-full mx-auto px-3 sm:px-5 lg:px-8 pt-4 sm:pt-6 pb-20 sm:pb-24 ${
         isWideLayout ? 'max-w-[1920px]' : 'max-w-7xl'
       }`}>
