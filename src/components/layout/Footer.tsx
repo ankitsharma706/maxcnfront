@@ -30,8 +30,10 @@ import {
   ExternalLink,
   ShieldCheck,
   CheckCircle2,
-  Circle
+  Circle,
+  Users
 } from 'lucide-react';
+import { useVisitorAnalytics } from '../../hooks/useVisitorAnalytics';
 
 export const Footer: React.FC = () => {
   const {
@@ -43,6 +45,7 @@ export const Footer: React.FC = () => {
   } = useGreeksStore();
 
   const { lastUpdated, isLoading: isPriceLoading } = usePriceStore();
+  const { totalVisitors, liveActiveTraders } = useVisitorAnalytics();
 
   // Modal Dialog States
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
@@ -183,11 +186,11 @@ export const Footer: React.FC = () => {
             {/* Micro divider */}
             <div className="h-4 w-px bg-slate-200 dark:bg-slate-800 mx-1 hidden lg:block" />
 
-            {/* Extra: Quick Feed & Latency Badge */}
+            {/* Extra: Quick Feed, Latency Badge & Live Visitors */}
             <div
               onClick={() => setIsStatusModalOpen(true)}
-              className="hidden lg:flex items-center gap-2 px-2 py-1 rounded-md bg-slate-100/70 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800 text-[10px] text-slate-600 dark:text-slate-300 hover:border-[#0EA5E9]/50 transition-colors cursor-pointer"
-              title="Click to view full System Telemetry & Cluster Health"
+              className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded-md bg-slate-100/70 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800 text-[10px] text-slate-600 dark:text-slate-300 hover:border-[#0EA5E9]/50 transition-colors cursor-pointer"
+              title={`Live Telemetry: ${liveActiveTraders} Active Traders Online | ${totalVisitors.toLocaleString()} Total Visits tracked via Vercel`}
             >
               <span className="flex items-center gap-1 font-bold text-emerald-500">
                 <span className="relative flex h-2 w-2">
@@ -200,6 +203,12 @@ export const Footer: React.FC = () => {
               <span className="flex items-center gap-1 text-[#0EA5E9] font-bold">
                 <Zap className="w-2.5 h-2.5" />
                 {latency}ms
+              </span>
+              <span className="text-slate-300 dark:text-slate-700">•</span>
+              <span className="flex items-center gap-1 font-semibold text-slate-700 dark:text-slate-300">
+                <Users className="w-2.5 h-2.5 text-[#0EA5E9]" />
+                <span className="text-[#0EA5E9] font-bold">{liveActiveTraders}</span> Online
+                <span className="text-slate-400 dark:text-slate-500 font-normal">({totalVisitors.toLocaleString()} visitors)</span>
               </span>
             </div>
           </div>
@@ -310,13 +319,18 @@ export const Footer: React.FC = () => {
                 Terms
               </a>
               <span>•</span>
-              <button
-                type="button"
-                onClick={() => setIsDocsModalOpen(true)}
-                className="hover:text-[#0EA5E9] dark:hover:text-[#0EA5E9] transition-colors cursor-pointer"
+              <a
+                href="/docs"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab('docs');
+                }}
+                className={`hover:text-[#0EA5E9] dark:hover:text-[#0EA5E9] transition-colors ${
+                  activeTab === 'docs' ? 'text-[#0EA5E9] font-bold' : ''
+                }`}
               >
                 Docs
-              </button>
+              </a>
               <span>•</span>
               <button
                 type="button"
@@ -355,6 +369,18 @@ export const Footer: React.FC = () => {
                   >
                     <BookOpen className="w-3.5 h-3.5 text-[#0EA5E9]" />
                     <span>About Platform</span>
+                  </a>
+                  <a
+                    href="/docs"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveTab('docs');
+                      setShowLinksMenu(false);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  >
+                    <Code2 className="w-3.5 h-3.5 text-[#0EA5E9]" />
+                    <span>Documentation</span>
                   </a>
                   <a
                     href="/contact"
@@ -491,13 +517,13 @@ export const Footer: React.FC = () => {
             type="button"
             onClick={() => setIsStatusModalOpen(true)}
             className="flex flex-col items-center justify-center min-w-[48px] min-h-[44px] py-1 text-emerald-500 cursor-pointer"
-            title="System Status"
+            title={`System Status: ${liveActiveTraders} Active Traders Online`}
           >
             <span className="relative flex h-3 w-3 mb-0.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
             </span>
-            <span className="text-[9px] font-mono font-bold tracking-tight">LIVE</span>
+            <span className="text-[9px] font-mono font-bold tracking-tight text-[#0EA5E9]">{liveActiveTraders} LIVE</span>
           </button>
         </div>
       </footer>

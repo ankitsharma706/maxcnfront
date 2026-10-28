@@ -1,8 +1,40 @@
+# =========================================================================
+# Commodity Greeks Pro - Enterprise Crawler & Robots Directives
+# Canonical Domain: https://maxcnfront.vercel.app
+# =========================================================================
+
+# Google AdSense Crawler - Must have full unhindered access to content for inventory verification
 User-agent: Mediapartners-Google
 Allow: /
 
+# Google Search Inspection & Mobile/Desktop Indexing Bots
+User-agent: Googlebot
+User-agent: Googlebot-Mobile
+User-agent: Google-InspectionTool
+Allow: /
+Disallow: /api/
+Disallow: /auth
+Disallow: /settings
+Disallow: /*?*token=*
+Disallow: /*?*session=*
+
+# Bingbot & Standard Crawlers
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: Slurp
+Allow: /
+Disallow: /api/
+Disallow: /auth
+Disallow: /settings
+
+# Default crawler rules
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /auth
+Disallow: /settings
+Disallow: /*?*token=*
 
+# Host & Sitemap specification
+Host: maxcnfront.vercel.app
 Sitemap: https://maxcnfront.vercel.app/sitemap.xml

@@ -3,44 +3,516 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Commodity Greeks Pro - Enterprise MCX Greeks Engine</title>
-    <meta name="description" content="Enterprise-grade Commodity Option Greeks Calculation Engine for MCX Commodities (Gold, Silver, Crude Oil, Natural Gas, Copper, Zinc, Aluminium, Lead, Nickel) using Black-Scholes model, scenario simulations, and MongoDB persistence." />
-    <meta name="keywords" content="Commodity Greeks, MCX, Black-Scholes, Option Greeks, Gold, Silver, Crude Oil, Natural Gas, Options Calculator, Trading Engine" />
+    <title>
+      Commodity Greeks Pro - Enterprise MCX Greeks Engine & Quantitative Options
+      Analytics
+    </title>
+    <meta
+      name="description"
+      content="Enterprise-grade Commodity Option Greeks Calculation Engine for MCX Commodities (Gold, Silver, Crude Oil, Natural Gas, Copper, Zinc, Aluminium, Lead, Nickel) using Black-76 model, scenario simulations, and MongoDB persistence."
+    />
+    <meta
+      name="keywords"
+      content="Commodity Greeks, MCX, Black-Scholes, Black-76, Option Greeks, Gold, Silver, Crude Oil, Natural Gas, Options Calculator, Trading Engine, Delta, Gamma, Theta, Vega"
+    />
     <meta name="author" content="Commodity Greeks Pro" />
-    <meta name="robots" content="index, follow" />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
     <meta name="theme-color" content="#00778A" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Commodity Greeks Pro - Enterprise MCX Greeks Engine" />
-    <meta property="og:description" content="Enterprise-grade Commodity Option Greeks Calculation Engine for MCX Commodities (Gold, Silver, Crude Oil, Natural Gas, Copper, Zinc, Aluminium, Lead, Nickel) using Black-Scholes model, scenario simulations, and MongoDB persistence." />
+    <meta
+      property="og:title"
+      content="Commodity Greeks Pro - Enterprise MCX Greeks Engine"
+    />
+    <meta
+      property="og:description"
+      content="Enterprise-grade Commodity Option Greeks Calculation Engine for MCX Commodities using Black-76 quantitative model."
+    />
     <meta property="og:site_name" content="Commodity Greeks Pro" />
+    <meta property="og:url" content="https://maxcnfront.vercel.app/" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:image"
+      content="https://maxcnfront.vercel.app/favicon.png"
+    />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Commodity Greeks Pro - Enterprise MCX Greeks Engine" />
-    <meta name="twitter:description" content="Enterprise-grade Commodity Option Greeks Calculation Engine for MCX Commodities." />
+    <meta name="twitter:site" content="@commoditygreeks" />
+    <meta
+      name="twitter:title"
+      content="Commodity Greeks Pro - Enterprise MCX Greeks Engine"
+    />
+    <meta
+      name="twitter:description"
+      content="Enterprise-grade Commodity Option Greeks Calculation Engine for MCX Commodities."
+    />
+    <meta
+      name="twitter:image"
+      content="https://maxcnfront.vercel.app/favicon.png"
+    />
 
-    <meta property="og:url" content="https://maxcnfront.vercel.app/" />
-
-    <!-- Canonical Link -->
+    <!-- Canonical Link & Language Alternates -->
     <link rel="canonical" href="https://maxcnfront.vercel.app/" />
+    <link
+      rel="alternate"
+      hreflang="en-IN"
+      href="https://maxcnfront.vercel.app/"
+    />
+    <link
+      rel="alternate"
+      hreflang="en-US"
+      href="https://maxcnfront.vercel.app/"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://maxcnfront.vercel.app/"
+    />
 
-    <!-- Google AdSense -->
-    <meta name="google-adsense-account" content="ca-pub-4318712038607459">
+    <!-- Pre-rendered Static JSON-LD WebSite Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Commodity Greeks Pro",
+        "url": "https://maxcnfront.vercel.app/",
+        "description": "Enterprise MCX Commodity Option Greeks Engine and Quantitative Analytics",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://maxcnfront.vercel.app/calculator?symbol={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+
+    <!-- Google AdSense Account Verification -->
+    <meta name="google-adsense-account" content="ca-pub-4318712038607459" />
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4318712038607459"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- Fonts and Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Scripts -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4318712038607459" crossorigin="anonymous"></script>
   </head>
-  <body class="bg-[#F7FAFB] text-[#1D2939] antialiased selection:bg-[#00778A]/20 selection:text-[#00778A]">
-    <div id="root"></div>
+  <body
+    class="bg-[#F7FAFB] text-[#1D2939] antialiased selection:bg-[#00778A]/20 selection:text-[#00778A]"
+  >
+    <!-- Pre-rendered Static Semantic Publisher Content for Crawlers & SSR Visibility -->
+    <div id="root">
+      <header
+        style="
+          padding: 1.5rem 1rem;
+          border-bottom: 1px solid #e2e8f0;
+          background: #ffffff;
+        "
+      >
+        <div
+          style="
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+          "
+        >
+          <div>
+            <a
+              href="/"
+              style="
+                font-size: 1.25rem;
+                font-weight: 800;
+                color: #0f172a;
+                text-decoration: none;
+              "
+            >
+              Commodity Greeks <span style="color: #0284c7">PRO</span>
+            </a>
+            <p style="font-size: 0.75rem; color: #64748b; margin: 0.2rem 0 0 0">
+              MCX Options Analytics & Quantitative Volatility Terminal
+            </p>
+          </div>
+          <nav
+            aria-label="Main Navigation"
+            style="
+              display: flex;
+              gap: 1rem;
+              font-size: 0.85rem;
+              font-weight: 600;
+            "
+          >
+            <a href="/" style="color: #0284c7; text-decoration: none"
+              >Terminal</a
+            >
+            <a href="/calculator" style="color: #475569; text-decoration: none"
+              >Calculator</a
+            >
+            <a href="/scenario" style="color: #475569; text-decoration: none"
+              >Simulator</a
+            >
+            <a href="/docs" style="color: #475569; text-decoration: none"
+              >Documentation</a
+            >
+            <a href="/about" style="color: #475569; text-decoration: none"
+              >About</a
+            >
+            <a href="/contact" style="color: #475569; text-decoration: none"
+              >Contact</a
+            >
+          </nav>
+        </div>
+      </header>
+
+      <main
+        style="
+          max-width: 1200px;
+          margin: 2rem auto;
+          padding: 0 1rem;
+          font-family: system-ui, sans-serif;
+          line-height: 1.6;
+          color: #334155;
+        "
+      >
+        <article>
+          <header style="margin-bottom: 2rem">
+            <h1
+              style="
+                font-size: 2.25rem;
+                font-weight: 800;
+                color: #0f172a;
+                margin-bottom: 0.75rem;
+              "
+            >
+              Commodity Greeks Pro — Enterprise MCX Options Analytics Engine
+            </h1>
+            <p style="font-size: 1.1rem; color: #475569">
+              A zero-latency, high-precision quantitative workstation engineered
+              specifically for Indian Multi Commodity Exchange (MCX)
+              futures-style option derivatives, Black-76 valuation, automated
+              broker chain OCR ingestion, and real-time risk simulation.
+            </p>
+          </header>
+
+          <section
+            style="
+              margin-bottom: 2.5rem;
+              background: #ffffff;
+              border: 1px solid #e2e8f0;
+              border-radius: 1rem;
+              padding: 1.5rem;
+            "
+          >
+            <h2
+              style="font-size: 1.35rem; color: #0f172a; margin-bottom: 0.75rem"
+            >
+              1. Quantitative Foundation: The Black (1976) Pricing Formulation
+            </h2>
+            <p>
+              Options on commodities traded on the Multi Commodity Exchange of
+              India (MCX) — including Gold, Silver, Crude Oil, Natural Gas,
+              Copper, and Zinc — are distinct from standard European equity
+              options. Because they settle into underlying front-month commodity
+              futures contracts rather than physical cash spot equity shares,
+              valuation is governed by the
+              <strong>Fischer Black (1976) Model</strong>.
+            </p>
+            <p>
+              In Black-76, the underlying futures price (F) already embeds the
+              cost-of-carry (storage expenses, interest rate differentials, and
+              convenience yields). Consequently, the standard continuous
+              dividend yield is replaced by the risk-free discounting factor,
+              yielding the analytical closed-form pricing:
+            </p>
+            <div
+              style="
+                background: #f8fafc;
+                border: 1px solid #cbd5e1;
+                border-radius: 0.5rem;
+                padding: 1rem;
+                font-family: monospace;
+                font-size: 0.9rem;
+                margin: 1rem 0;
+              "
+            >
+              <div>
+                <strong>Call Option Premium (C):</strong> e^(-rT) × [ F × N(d1)
+                - K × N(d2) ]
+              </div>
+              <div>
+                <strong>Put Option Premium (P):</strong> e^(-rT) × [ K × N(-d2)
+                - F × N(-d1) ]
+              </div>
+              <div
+                style="margin-top: 0.5rem; font-size: 0.8rem; color: #64748b"
+              >
+                where d1 = [ ln(F/K) + (0.5 × σ²) × T ] / [ σ × √T ]<br />
+                and d2 = d1 - σ × √T
+              </div>
+            </div>
+          </section>
+
+          <section
+            style="
+              margin-bottom: 2.5rem;
+              background: #ffffff;
+              border: 1px solid #e2e8f0;
+              border-radius: 1rem;
+              padding: 1.5rem;
+            "
+          >
+            <h2
+              style="font-size: 1.35rem; color: #0f172a; margin-bottom: 0.75rem"
+            >
+              2. First & Second-Order Option Greeks Guide for MCX Traders
+            </h2>
+            <p>
+              Risk hedging in commodity derivatives requires constant monitoring
+              of sensitivity coefficients (Greeks). Commodity Greeks Pro
+              continuously calculates 64-bit numerical evaluations of the
+              following primary risk parameters:
+            </p>
+            <ul style="padding-left: 1.25rem; space-y: 0.5rem">
+              <li>
+                <strong>Delta (Δ):</strong> Measures the rate of change of
+                option premium with respect to a ₹1 movement in the underlying
+                MCX commodity futures contract. Call delta ranges from 0 to
+                +e^(-rT), while put delta ranges from -e^(-rT) to 0.
+              </li>
+              <li>
+                <strong>Gamma (Γ):</strong> The second derivative of option
+                value relative to futures price, representing the curvature or
+                acceleration of Delta. Gamma spikes sharply for At-The-Money
+                (ATM) options approaching expiration, introducing pin risk for
+                option writers.
+              </li>
+              <li>
+                <strong>Theta (Θ):</strong> Quantifies the daily decay in option
+                premium resulting from the passage of time (calendar decay),
+                holding price and volatility constant.
+              </li>
+              <li>
+                <strong>Vega (ν):</strong> Reflects sensitivity to a 1% (100
+                basis point) shift in Implied Volatility (IV). Long option
+                holders possess positive vega, while net options sellers face
+                severe tail risk from volatility spikes.
+              </li>
+              <li>
+                <strong>Rho (ρ):</strong> The sensitivity of option premium to
+                changes in the domestic risk-free interest rate (MIBOR / RBI
+                benchmark).
+              </li>
+            </ul>
+          </section>
+
+          <section
+            style="
+              margin-bottom: 2.5rem;
+              background: #ffffff;
+              border: 1px solid #e2e8f0;
+              border-radius: 1rem;
+              padding: 1.5rem;
+            "
+          >
+            <h2
+              style="font-size: 1.35rem; color: #0f172a; margin-bottom: 0.75rem"
+            >
+              3. MCX Covered Commodity Contracts & Lot Specifications
+            </h2>
+            <p>
+              Unlike equity contracts with standardized 25 or 50 lot sizes, MCX
+              commodities operate with varying physical units, contract
+              multipliers, and tender period margin escalations:
+            </p>
+            <div style="overflow-x: auto">
+              <table
+                style="
+                  width: 100%;
+                  border-collapse: collapse;
+                  font-size: 0.85rem;
+                  text-align: left;
+                "
+              >
+                <thead>
+                  <tr
+                    style="
+                      border-bottom: 2px solid #cbd5e1;
+                      background: #f8fafc;
+                    "
+                  >
+                    <th style="padding: 0.5rem">Commodity</th>
+                    <th style="padding: 0.5rem">Contract Multiplier</th>
+                    <th style="padding: 0.5rem">Quotation Base</th>
+                    <th style="padding: 0.5rem">Typical ATM Strike Gap</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid #e2e8f0">
+                    <td style="padding: 0.5rem">Gold Mini (GOLDM)</td>
+                    <td style="padding: 0.5rem">100 grams</td>
+                    <td style="padding: 0.5rem">₹ per 10 grams</td>
+                    <td style="padding: 0.5rem">₹100</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid #e2e8f0">
+                    <td style="padding: 0.5rem">Silver Mini (SILVERM)</td>
+                    <td style="padding: 0.5rem">5 kilograms</td>
+                    <td style="padding: 0.5rem">₹ per 1 kilogram</td>
+                    <td style="padding: 0.5rem">₹250</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid #e2e8f0">
+                    <td style="padding: 0.5rem">Crude Oil (CRUDEOIL)</td>
+                    <td style="padding: 0.5rem">100 Barrels</td>
+                    <td style="padding: 0.5rem">₹ per 1 Barrel</td>
+                    <td style="padding: 0.5rem">₹50</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid #e2e8f0">
+                    <td style="padding: 0.5rem">Natural Gas (NATGAS)</td>
+                    <td style="padding: 0.5rem">1250 mmBtu</td>
+                    <td style="padding: 0.5rem">₹ per 1 mmBtu</td>
+                    <td style="padding: 0.5rem">₹2.50 / ₹5.00</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid #e2e8f0">
+                    <td style="padding: 0.5rem">Copper (COPPER)</td>
+                    <td style="padding: 0.5rem">2500 kilograms</td>
+                    <td style="padding: 0.5rem">₹ per 1 kilogram</td>
+                    <td style="padding: 0.5rem">₹5.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section
+            style="
+              margin-bottom: 2.5rem;
+              background: #ffffff;
+              border: 1px solid #e2e8f0;
+              border-radius: 1rem;
+              padding: 1.5rem;
+            "
+          >
+            <h2
+              style="font-size: 1.35rem; color: #0f172a; margin-bottom: 0.75rem"
+            >
+              4. Frequently Asked Questions (FAQ) — Commodity Greeks & Valuation
+            </h2>
+            <div style="space-y: 1rem">
+              <div style="margin-bottom: 1rem">
+                <h3
+                  style="
+                    font-size: 1rem;
+                    font-weight: 700;
+                    color: #0f172a;
+                    margin-bottom: 0.25rem;
+                  "
+                >
+                  Why do MCX option premiums differ from theoretical
+                  Black-Scholes equity calculators?
+                </h3>
+                <p style="font-size: 0.85rem; color: #475569">
+                  MCX options are options on futures, requiring the Black-76
+                  model. Standard equity Black-Scholes assumes an underlying
+                  spot stock with continuous cash dividends, which distorts
+                  cost-of-carry and futures basis adjustments in commodity
+                  contracts.
+                </p>
+              </div>
+              <div style="margin-bottom: 1rem">
+                <h3
+                  style="
+                    font-size: 1rem;
+                    font-weight: 700;
+                    color: #0f172a;
+                    margin-bottom: 0.25rem;
+                  "
+                >
+                  How does automated broker screenshot OCR parse option chains?
+                </h3>
+                <p style="font-size: 0.85rem; color: #475569">
+                  Our optical character recognition (OCR) engine detects table
+                  headers from leading Indian brokers (Groww, Zerodha Kite,
+                  Upstox, Angel One), rectifies optical distortion, parses
+                  strike rows, open interest, and implied volatility, and
+                  synchronizes them directly with our MongoDB persistence layer.
+                </p>
+              </div>
+            </div>
+          </section>
+        </article>
+      </main>
+
+      <footer
+        style="
+          border-top: 1px solid #e2e8f0;
+          padding: 2rem 1rem;
+          background: #ffffff;
+          font-size: 0.8rem;
+          color: #64748b;
+          text-align: center;
+        "
+      >
+        <div
+          style="
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            align-items: center;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              gap: 1.5rem;
+              flex-wrap: wrap;
+              justify-content: center;
+            "
+          >
+            <a href="/about" style="color: #64748b; text-decoration: none"
+              >About Platform</a
+            >
+            <a href="/docs" style="color: #64748b; text-decoration: none"
+              >Documentation & Manual</a
+            >
+            <a href="/contact" style="color: #64748b; text-decoration: none"
+              >Contact & Support</a
+            >
+            <a
+              href="/privacy-policy"
+              style="color: #64748b; text-decoration: none"
+              >Privacy Policy</a
+            >
+            <a
+              href="/terms-of-service"
+              style="color: #64748b; text-decoration: none"
+              >Terms of Service</a
+            >
+          </div>
+          <p>
+            © 2026 Commodity Greeks Pro. Enterprise MCX Options Terminal. All
+            calculations theoretical. Market trading involves substantial
+            financial risk.
+          </p>
+        </div>
+      </footer>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

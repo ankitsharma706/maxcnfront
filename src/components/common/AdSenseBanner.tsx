@@ -1,4 +1,10 @@
 import React, { useEffect, useRef } from 'react';
+import { useGreeksStore } from '../../store/useGreeksStore';
+import {
+  isAdSenseEligibleRoute,
+  loadAdSenseScriptForRoute,
+  ADSENSE_CLIENT_ID
+} from '../../utils/adSenseManager';
 import { ShieldCheck, Info } from 'lucide-react';
 
 interface AdSenseBannerProps {
@@ -18,22 +24,36 @@ export const AdSenseBanner: React.FC<AdSenseBannerProps> = ({
   format = 'auto',
   className = ''
 }) => {
+  const { activeTab } = useGreeksStore();
   const adRef = useRef<HTMLModElement>(null);
   const pushedRef = useRef<boolean>(false);
 
+  // Strict Policy Check: NEVER render ad units or script on restricted routes (auth, settings, utilities)
+  const isEligible = isAdSenseEligibleRoute(activeTab);
+
   useEffect(() => {
-    // Only attempt push if AdSense script is present and slot hasn't been pushed
+    if (!isEligible) return;
+
+    // Dynamically load AdSense script ONLY when viewing an approved content-rich route
+    loadAdSenseScriptForRoute(activeTab);
+
+    // Push slot once script is ready
     if (slotId && !pushedRef.current && typeof window !== 'undefined') {
       try {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
         pushedRef.current = true;
       } catch (err) {
-        // Suppress AdSense duplicate push error in SPA re-renders
+        // Suppress duplicate push in React re-renders
       }
     }
-  }, [slotId]);
+  }, [slotId, activeTab, isEligible]);
 
-  // If a slot ID is configured, render the compliant ins unit
+  // If the route is ineligible (auth, settings, uploads, history), render NOTHING
+  if (!isEligible) {
+    return null;
+  }
+
+  // If approved and slotId is provided, render the compliant unit
   if (slotId) {
     return (
       <div className={`w-full overflow-hidden flex flex-col items-center justify-center my-4 ${className}`}>
@@ -44,7 +64,7 @@ export const AdSenseBanner: React.FC<AdSenseBannerProps> = ({
           ref={adRef}
           className="adsbygoogle block w-full text-center"
           style={{ display: 'block' }}
-          data-ad-client="ca-pub-4318712038607459"
+          data-ad-client={ADSENSE_CLIENT_ID}
           data-ad-slot={slotId}
           data-ad-format={format}
           data-full-width-responsive="true"
@@ -53,7 +73,7 @@ export const AdSenseBanner: React.FC<AdSenseBannerProps> = ({
     );
   }
 
-  // Pre-approval fallback: Provide high-value institutional risk disclosure instead of empty placeholder
+  // Pre-approval fallback: High-value institutional notice instead of empty container
   return (
     <div className={`w-full rounded-2xl bg-gradient-to-r from-slate-50 to-sky-50/40 dark:from-slate-900/60 dark:to-slate-800/40 border border-slate-200/80 dark:border-slate-800/80 p-4 transition-colors ${className}`}>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">

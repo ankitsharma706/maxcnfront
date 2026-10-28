@@ -16,6 +16,8 @@ import {
   csrfProtection,
   jwtAuthMiddleware
 } from './src/server/middleware/security';
+import { generateSitemapXml, generateRobotsTxt } from './src/seo/sitemap/sitemapGenerator';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -104,22 +106,39 @@ async function startServer() {
   // 5. Core Greeks calculation legacy routes
   app.use('/api/greeks', greeksRoutes);
 
-  // Crawler & Verification Endpoints (Robots, Sitemap, AdSense Ads.txt)
+  // Crawler & Verification Endpoints (Dynamic Robots, Dynamic Sitemap, AdSense Ads.txt)
   const publicDir = path.resolve(__dirname, 'public');
+
   app.get('/robots.txt', (_req, res) => {
-    res.type('text/plain; charset=utf-8');
-    res.sendFile(path.join(publicDir, 'robots.txt'));
+    try {
+      const robots = generateRobotsTxt();
+      res.type('text/plain; charset=utf-8');
+      res.set('Cache-Control', 'public, max-age=86400');
+      res.send(robots);
+    } catch {
+      res.type('text/plain; charset=utf-8');
+      res.sendFile(path.join(publicDir, 'robots.txt'));
+    }
   });
 
-  app.get('/sitemap.xml', (_req, res) => {
-    res.type('application/xml; charset=utf-8');
-    res.sendFile(path.join(publicDir, 'sitemap.xml'));
+  app.get('/sitemap.xml', async (_req, res) => {
+    try {
+      const xml = await generateSitemapXml();
+      res.type('application/xml; charset=utf-8');
+      res.set('Cache-Control', 'public, max-age=3600, s-maxage=86400');
+      res.send(xml);
+    } catch {
+      res.type('application/xml; charset=utf-8');
+      res.sendFile(path.join(publicDir, 'sitemap.xml'));
+    }
   });
 
   app.get('/ads.txt', (_req, res) => {
     res.type('text/plain; charset=utf-8');
+    res.set('Cache-Control', 'public, max-age=86400');
     res.sendFile(path.join(publicDir, 'ads.txt'));
   });
+
 
   // 5. Vite middleware for frontend SPA in development, static files in production
   if (process.env.NODE_ENV !== 'production') {
